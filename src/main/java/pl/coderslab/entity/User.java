@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
@@ -19,11 +20,12 @@ public class User {
     @NotBlank
     private String hashPassword;
 
-    @NotBlank
+    @NotNull
     private Boolean enabled;
 
     @NotBlank
     @Email
+    @Column(unique = true)
     private String email;
 
     public User() {
