@@ -4,14 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.entity.User;
 import pl.coderslab.repository.UserRepository;
 import pl.coderslab.service.PasswordService;
+import pl.coderslab.validator.RegisterValidation;
+import pl.coderslab.validator.SignInValidation;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
@@ -19,9 +23,11 @@ public class HomeController {
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping("/home")
-    public String home() {
-        return "home";
+    @RequestMapping("/tweeter")
+    public String home(HttpServletRequest request) {
+        HttpSession sess = request.getSession();
+        sess.setAttribute("passCheck", false);
+        return "homeLogin";
     }
 
     @RequestMapping("/register")
@@ -32,12 +38,53 @@ public class HomeController {
     }
 
     @PostMapping("/register")
-    public String saveNewUser(@Valid User user, BindingResult result) {
+    public String saveNewUser(@Validated(RegisterValidation.class) User user, BindingResult result) {
         if(result.hasErrors()) return "form/userRegister";
         if(userRepository.findUserByEmail(user.getEmail()) == null){
             user.setHashPassword(PasswordService.makeHashed(user.getHashPassword()));
             userRepository.save(user);
-            return "home";
+            return "redirect:/signIn";
         } else return "form/userRegister";
+    }
+
+    @RequestMapping("/signIn")
+    public String signInUser(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "form/userSignIn";
+    }
+
+    @PostMapping("/signIn")
+    public String signInConfirmation(@Validated(SignInValidation.class) User user, BindingResult result, HttpServletRequest request, Model model) {
+        if(result.hasErrors()) return "form/userSignIn";
+        User userFromDb  = userRepository.findUserByEmail(user.getEmail());
+        HttpSession sess = request.getSession();
+        if(userFromDb != null) {
+            if(PasswordService.checkPassword(user.getHashPassword(), userFromDb.getHashPassword())){
+                sess.setAttribute("passCheck", true);
+                return "home";
+            } else {
+                model.addAttribute("user", user);
+                return "form/userSignIn";
+            }
+        }
+        return "redirect:/signIn";
+    }
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public String testSessPass(HttpServletRequest request) {
+        HttpSession sess = null;
+        try {
+            sess = request.getSession();
+            if (sess == null) {
+                return "sess is empty";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "sess is empty from catch";
+        }
+        if((Boolean)sess.getAttribute("passCheck")) return "passwrord is valid";
+        else return "password is invalid";
     }
 }

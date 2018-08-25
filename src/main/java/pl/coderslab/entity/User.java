@@ -3,6 +3,8 @@ package pl.coderslab.entity;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mindrot.jbcrypt.BCrypt;
+import pl.coderslab.validator.RegisterValidation;
+import pl.coderslab.validator.SignInValidation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,16 +16,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank
+    @NotBlank(groups = RegisterValidation.class)
     private String username;
 
-    @NotBlank
+    @NotBlank(groups = {RegisterValidation.class, SignInValidation.class})
     private String hashPassword;
 
-    @NotNull
+    @NotNull(groups = RegisterValidation.class)
     private Boolean enabled;
 
-    @NotBlank
+    @NotBlank(groups = {RegisterValidation.class, SignInValidation.class})
     @Email
     @Column(unique = true)
     private String email;
