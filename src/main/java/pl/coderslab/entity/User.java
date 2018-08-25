@@ -8,6 +8,8 @@ import pl.coderslab.validator.SignInValidation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -29,6 +31,9 @@ public class User {
     @Email
     @Column(unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "user")
+    private List<Tweet> tweets = new ArrayList<Tweet>();
 
     public User() {
     }
