@@ -12,7 +12,6 @@ import pl.coderslab.repository.TweetRepository;
 import pl.coderslab.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -65,5 +64,13 @@ public class TweetController {
         tweet.setUser(currentUser);
         tweetRepository.save(tweet);
         return "redirect:/home";
+    }
+
+    @RequestMapping("/tweetDetails")
+    public String displayTweetDetails(HttpServletRequest request, Model model) {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Tweet tweet = tweetRepository.findOne(id);
+        model.addAttribute("tweet", tweet);
+        return "specificTweet";
     }
 }

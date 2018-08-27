@@ -10,6 +10,7 @@
         <th>owner</th>
         <th>text</th>
         <th>created</th>
+        <th>details</th>
         <tbody>
         <c:forEach items="${tweets}" var="tweet">
             <tr>
@@ -17,7 +18,7 @@
                 <td>${tweet.user.username}</td>
                 <td>${tweet.text}</td>
                 <td>${tweet.created}</td>
-
+                <td><a href="/tweet/tweetDetails?id=${tweet.id}">click</a></td>
             </tr>
         </c:forEach>
         </tbody>
