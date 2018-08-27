@@ -22,5 +22,6 @@
         <input type="submit" value="Click">
     </form>
 
+    <h4>Add tweet -> <a href="/tweet/addTweet">click</a> </h4>
 </body>
 </html>

@@ -95,4 +95,10 @@ public class HomeController {
         if((Boolean)sess.getAttribute("passCheck")) return "passwrord is valid";
         else return "password is invalid";
     }
+
+    @RequestMapping("/test2")
+    public String testBootrstrap() {
+        return "index";
+    }
+
 }

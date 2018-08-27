@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
@@ -19,7 +20,6 @@ public class Tweet {
     @NotBlank
     private String text;
 
-    @NotEmpty
     private Timestamp created;
 
     public Tweet() {
