@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 @Entity
@@ -18,6 +19,7 @@ public class Tweet {
     private User user;
 
     @NotBlank
+    @Size(max = 140)
     private String text;
 
     private Timestamp created;

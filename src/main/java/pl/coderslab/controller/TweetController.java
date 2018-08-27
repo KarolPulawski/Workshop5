@@ -60,10 +60,10 @@ public class TweetController {
 
     @PostMapping("/addTweet")
     public String saveNewTweet(@ModelAttribute Tweet tweet, HttpServletRequest request) {
-//        HttpSession sess = request.getSession();
-//        User currentUser = (User)sess.getAttribute("currentUser");
-//        tweet.setUser(currentUser);
+        HttpSession sess = request.getSession();
+        User currentUser = (User)sess.getAttribute("currentUser");
+        tweet.setUser(currentUser);
         tweetRepository.save(tweet);
-        return "home";
+        return "redirect:/home";
     }
 }

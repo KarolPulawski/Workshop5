@@ -15,13 +15,16 @@
 
     <form action="/tweet/allTweetsSpecificUser" method="get">
         <select name = "value">
-            <c:forEach items="${users}" var="user">
-                <option value="${user.id}">${user.id}</option>
+            <c:forEach items="${users}" var="u">
+                <option value="${u.id}">${u.id}</option>
+
             </c:forEach>
         </select>
         <input type="submit" value="Click">
     </form>
 
     <h4>Add tweet -> <a href="/tweet/addTweet">click</a> </h4>
+
+    <h4>Log out: <a href="/logout">click</a> </h4>
 </body>
 </html>

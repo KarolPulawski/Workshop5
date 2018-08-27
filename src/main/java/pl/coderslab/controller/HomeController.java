@@ -30,6 +30,11 @@ public class HomeController {
         return userRepository.findAll();
     }
 
+    @RequestMapping("/home")
+    public String homeDisplay() {
+        return "home";
+    }
+
     @RequestMapping("/tweeter")
     public String home(HttpServletRequest request) {
         HttpSession sess = request.getSession();
@@ -96,9 +101,11 @@ public class HomeController {
         else return "password is invalid";
     }
 
-    @RequestMapping("/test2")
-    public String testBootrstrap() {
-        return "index";
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession sess = request.getSession();
+        sess.setAttribute("passCheck", false);
+        sess.setAttribute("currentUser", null);
+        return "homeLogin";
     }
-
 }
