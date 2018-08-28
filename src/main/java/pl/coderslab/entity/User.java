@@ -35,6 +35,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Tweet> tweets = new ArrayList<Tweet>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<Comment>();
+
     public User() {
     }
 

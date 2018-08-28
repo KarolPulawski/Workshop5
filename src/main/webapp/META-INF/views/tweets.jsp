@@ -18,7 +18,7 @@
                 <td>${tweet.user.username}</td>
                 <td>${tweet.text}</td>
                 <td>${tweet.created}</td>
-                <td><a href="/tweet/tweetDetails?id=${tweet.id}">click</a></td>
+                <td><a href="/tweet/tweetDetails?tweet_id=${tweet.id}">click</a></td>
             </tr>
         </c:forEach>
         </tbody>

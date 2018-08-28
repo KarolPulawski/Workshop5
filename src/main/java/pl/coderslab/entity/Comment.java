@@ -1,18 +1,11 @@
 package pl.coderslab.entity;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "tweet")
-public class Tweet {
+@Table(name = "comments")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,16 +13,14 @@ public class Tweet {
     @ManyToOne
     private User user;
 
-    @NotBlank
-    @Size(max = 140)
-    private String text;
+    @ManyToOne
+    private Tweet tweet;
 
     private Timestamp created;
 
-    @OneToMany(mappedBy = "tweet")
-    private List<Comment> comments = new ArrayList<Comment>();
+    private String text;
 
-    public Tweet() {
+    public Comment() {
     }
 
     public Integer getId() {
@@ -48,12 +39,12 @@ public class Tweet {
         this.user = user;
     }
 
-    public String getText() {
-        return text;
+    public Tweet getTweet() {
+        return tweet;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTweet(Tweet tweet) {
+        this.tweet = tweet;
     }
 
     public Timestamp getCreated() {
@@ -63,4 +54,15 @@ public class Tweet {
     public void setCreated(Timestamp created) {
         this.created = created;
     }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }
+
+
+

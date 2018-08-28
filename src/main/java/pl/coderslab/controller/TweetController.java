@@ -6,10 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.coderslab.entity.Comment;
 import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
+import pl.coderslab.repository.CommentRepository;
 import pl.coderslab.repository.TweetRepository;
 import pl.coderslab.repository.UserRepository;
+import pl.coderslab.service.DateService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,6 +27,9 @@ public class TweetController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @RequestMapping("/allTweets")
     public String displayAllTweets(Model model) {
@@ -68,9 +74,24 @@ public class TweetController {
 
     @RequestMapping("/tweetDetails")
     public String displayTweetDetails(HttpServletRequest request, Model model) {
-        Integer id = Integer.parseInt(request.getParameter("id"));
+        Integer id = Integer.parseInt(request.getParameter("tweet_id"));
         Tweet tweet = tweetRepository.findOne(id);
+        List<Comment> comments = commentRepository.findAllByTweetIdOrderByCreatedDesc(id);
         model.addAttribute("tweet", tweet);
+        model.addAttribute("comments", comments);
+        Comment comment = new Comment();
+        model.addAttribute("comment", comment);
         return "specificTweet";
+    }
+
+    @PostMapping("/tweetDetails")
+    public String addNewComment(@ModelAttribute Comment comment, HttpServletRequest request) {
+        Integer tweetId = Integer.parseInt(request.getParameter("tweet_id"));
+        comment.setCreated(DateService.currentTimeToDb());
+        HttpSession sess = request.getSession();
+        User currentUser = (User)sess.getAttribute("currentUser");
+        comment.setUser(currentUser);
+        commentRepository.saveAndFlush(comment);
+        return "redirect:/tweet/tweetDetails?tweet_id="+tweetId;
     }
 }
