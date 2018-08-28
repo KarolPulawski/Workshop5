@@ -33,7 +33,7 @@ public class TweetController {
 
     @RequestMapping("/allTweets")
     public String displayAllTweets(Model model) {
-        List<Tweet> tweets = tweetRepository.findAll();
+        List<Tweet> tweets = tweetRepository.findAllSortByDateCreate();
         model.addAttribute("tweets", tweets);
         return "tweets";
     }
@@ -43,7 +43,7 @@ public class TweetController {
         HttpSession sess = request.getSession();
         Integer id = ((User)sess.getAttribute("currentUser")).getId();
         User currentUser = userRepository.findOne(id);
-        List<Tweet> tweets = tweetRepository.findAllByUser(currentUser);
+        List<Tweet> tweets = tweetRepository.findAllByUserOrderByCreatedDesc(currentUser);
         model.addAttribute("tweets", tweets);
         return "tweets";
     }
@@ -51,7 +51,7 @@ public class TweetController {
     @RequestMapping("/allTweetsSpecificUser")
     public String displayAllTweetsSpecificUser(HttpServletRequest request, Model model) {
         Integer id = Integer.parseInt(request.getParameter("value"));
-        List<Tweet> tweets = tweetRepository.findAllByUserId(id);
+        List<Tweet> tweets = tweetRepository.findAllByUserIdOrderByCreatedDesc(id);
         model.addAttribute("tweets", tweets);
         return "tweets";
     }
@@ -68,6 +68,7 @@ public class TweetController {
         HttpSession sess = request.getSession();
         User currentUser = (User)sess.getAttribute("currentUser");
         tweet.setUser(currentUser);
+        tweet.setCreated(DateService.currentTimeToDb());
         tweetRepository.save(tweet);
         return "redirect:/home";
     }

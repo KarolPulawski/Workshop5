@@ -9,8 +9,6 @@
 <form:form modelAttribute="tweet" method="post">
     <form:errors path="*"/>
     Text: <form:textarea path="text"/></br>
-    Created: <form:input path="created"/></br>
-
     <input type="submit" name="Submit" value="Send">
 </form:form>
 </body>
