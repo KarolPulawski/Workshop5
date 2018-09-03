@@ -38,6 +38,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<Comment>();
 
+    @OneToMany
+    private List<Message> received = new ArrayList<Message>();
+
+    @OneToMany
+    private List<Message> sent = new ArrayList<Message>();
+
     public User() {
     }
 

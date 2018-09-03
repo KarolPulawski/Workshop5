@@ -26,5 +26,8 @@
     <h4>Add tweet -> <a href="/tweet/addTweet">click</a> </h4>
 
     <h4>Log out: <a href="/logout">click</a> </h4>
+
+    <h4>Send message: <a href="/messages">messages</a> </h4>
+
 </body>
 </html>
