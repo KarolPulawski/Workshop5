@@ -9,12 +9,14 @@
     <th>id</th>
     <th>sender</th>
     <th>content</th>
+    <th>Read?</th>
     <tbody>
     <c:forEach items="${messages}" var="message">
         <tr>
             <td>${message.id}</td>
             <td>${message.sender.username}</td>
             <td>${message.content}</td>
+            <td>${message.read}</td>
         </tr>
     </c:forEach>
     </tbody>

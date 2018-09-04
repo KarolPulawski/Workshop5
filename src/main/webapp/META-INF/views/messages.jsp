@@ -13,12 +13,14 @@
     <th>id</th>
     <th>sender</th>
     <th>content</th>
+    <th>read?</th>
     <tbody>
     <c:forEach items="${messages}" var="message">
         <tr>
             <td>${message.id}</td>
             <td>${message.sender.username}</td>
             <td>${message.content}</td>
+            <td>${message.read}</td>
             <%--<td><a href="/tweet/tweetDetails?tweet_id=${tweet.id}">click</a></td>--%>
         </tr>
     </c:forEach>
