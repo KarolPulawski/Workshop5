@@ -29,5 +29,7 @@
 
     <h4>Send message: <a href="/messages">messages</a> </h4>
 
+    <h4>Edit user: <a href="/edit">click to edit</a> </h4>
+
 </body>
 </html>
