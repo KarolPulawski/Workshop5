@@ -5,10 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-
-<h4>Send message: <a href="/send">click</a> </h4>
-<h4>History: <a href="/history">click</a> </h4>
-
 <table>
     <th>id</th>
     <th>sender</th>
@@ -19,13 +15,10 @@
             <td>${message.id}</td>
             <td>${message.sender.username}</td>
             <td>${message.content}</td>
-            <%--<td><a href="/tweet/tweetDetails?tweet_id=${tweet.id}">click</a></td>--%>
         </tr>
     </c:forEach>
     </tbody>
 </table>
-
-
 
 </body>
 </html>

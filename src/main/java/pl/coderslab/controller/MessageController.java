@@ -2,6 +2,7 @@ package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,7 +32,10 @@ public class MessageController {
     }
 
     @RequestMapping("/messages")
-    public String displayMessages() {
+    public String displayMessages(HttpServletRequest request, Model model) {
+        HttpSession sess = request.getSession();
+        Integer userId = ((User)sess.getAttribute("currentUser")).getId();
+        model.addAttribute("messages", messageRepository.findAllByReceiverId(userId));
         return "messages";
     }
 
@@ -48,7 +52,16 @@ public class MessageController {
         User sender = (User)sess.getAttribute("currentUser");
         message.setSender(sender);
         messageRepository.saveAndFlush(message);
-        return "messages";
+        return "redirect:messages";
+    }
+
+    @RequestMapping("/history")
+    public String historyMessage(HttpServletRequest request, Model model) {
+        HttpSession sess = request.getSession();
+        Integer userId = ((User)sess.getAttribute("currentUser")).getId();
+        List<Message> messages = messageRepository.findAllBySenderId(userId);
+        model.addAttribute("messages", messages);
+        return "history";
     }
 
 }
