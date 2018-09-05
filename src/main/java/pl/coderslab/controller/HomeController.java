@@ -15,12 +15,17 @@ import pl.coderslab.service.PasswordService;
 import pl.coderslab.validator.RegisterValidation;
 import pl.coderslab.validator.SignInValidation;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 public class HomeController {
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Autowired
     private UserRepository userRepository;
@@ -107,5 +112,21 @@ public class HomeController {
         sess.setAttribute("passCheck", false);
         sess.setAttribute("currentUser", null);
         return "homeLogin";
+    }
+
+    @RequestMapping("/edit")
+    public String userEdit(HttpServletRequest request, Model model) {
+        HttpSession sess = request.getSession();
+        User user = ((User)sess.getAttribute("currentUser"));
+        model.addAttribute("user", user);
+        return "form/userEdit";
+    }
+
+    @PostMapping("/edit")
+    public String saveUserEdit(HttpServletRequest request, @ModelAttribute User user) {
+        user.setHashPassword(PasswordService.makeHashed(user.getHashPassword()));
+        userRepository.saveAndFlush(user);
+        //        em.merge(user);
+        return "home";
     }
 }
