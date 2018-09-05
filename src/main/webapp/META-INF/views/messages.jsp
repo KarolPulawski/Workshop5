@@ -15,20 +15,42 @@
     <th>sender</th>
     <th>content</th>
     <th>read?</th>
+    <th>READ</th>
     <tbody>
     <c:forEach items="${messages}" var="message">
         <tr>
             <td>${message.id}</td>
             <td>${message.sender.username}</td>
-            <c:choose>
-                <c:when test = "${fn:length(message.content) > 10}">
-                    <td>${fn:substring(message.content, 0, 9)}...</td>
-                </c:when>
-                <c:otherwise>
-                    <td>${message.content}</td>
-                </c:otherwise>
-            </c:choose>
+
+            <c:if test="${message.read == false}">
+                <c:choose>
+                    <c:when test = "${fn:length(message.content) > 10}">
+                        <td style = "font-weight:bold">${fn:substring(message.content, 0, 9)}...</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td style = "font-weight:bold">${message.content}</td>
+                    </c:otherwise>
+                </c:choose>
+            </c:if>
+
+            <c:if test="${message.read == true}">
+                <c:choose>
+                    <c:when test = "${fn:length(message.content) > 10}">
+                        <td>${fn:substring(message.content, 0, 9)}...</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>${message.content}</td>
+                    </c:otherwise>
+                </c:choose>
+            </c:if>
+
             <td>${message.read}</td>
+
+            <td>
+                <form action="/readMessage" method="get">
+                    <button type="submit" name="id" value="${message.id}">Read</button>
+                </form>
+            </td>
         </tr>
     </c:forEach>
     </tbody>

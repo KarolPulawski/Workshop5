@@ -11,6 +11,7 @@
     <th>receiver</th>
     <th>content</th>
     <th>Read?</th>
+    <th>Details</th>
     <tbody>
     <c:forEach items="${messages}" var="message">
         <tr>
@@ -25,6 +26,11 @@
                 </c:otherwise>
             </c:choose>
             <td>${message.read}</td>
+            <td>
+                <form action="/readMessage" method="get">
+                    <button type="submit" name="id" value="${message.id}">Read</button>
+                </form>
+            </td>
         </tr>
     </c:forEach>
     </tbody>

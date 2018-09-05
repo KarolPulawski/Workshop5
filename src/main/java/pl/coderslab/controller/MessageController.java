@@ -64,4 +64,13 @@ public class MessageController {
         return "history";
     }
 
+    @RequestMapping("/readMessage")
+    public String readMessage(HttpServletRequest request, Model model) {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Message message = messageRepository.findById(id);
+        model.addAttribute("message", message);
+        message.setRead(true);
+        messageRepository.save(message);
+        return "message";
+    }
 }
