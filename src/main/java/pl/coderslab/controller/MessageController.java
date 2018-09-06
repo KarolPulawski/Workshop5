@@ -1,8 +1,6 @@
 package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,8 +25,17 @@ public class MessageController {
     private MessageRepository messageRepository;
 
     @ModelAttribute("users")
-    private List<User> users() {
-        return userRepository.findAll();
+    private List<User> users(HttpServletRequest request) {
+        HttpSession sess = request.getSession();
+        List<User> users = userRepository.findAll();
+        Integer id = ((User)sess.getAttribute("currentUser")).getId();
+        for(User u : users) {
+            if (u.getId() == id) {
+                users.remove(u);
+                break;
+            }
+        }
+        return users;
     }
 
     @RequestMapping("/messages")
