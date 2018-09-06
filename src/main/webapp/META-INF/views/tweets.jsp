@@ -1,3 +1,4 @@
+<%@include file="default/header.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -26,3 +27,5 @@
 
 </body>
 </html>
+
+<%@include file="default/footer.jsp"%>

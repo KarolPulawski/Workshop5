@@ -1,46 +1,37 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <ul class="sidebar navbar-nav">
     <li class="nav-item">
-        <a class="nav-link" href="/panelEmployee">
+        <a class="nav-link" href="/tweet/allTweetsCurrentUser">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Employees</span>
+            <span>My tweets</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/panelCustomer">
+        <a class="nav-link" href="/tweet/allTweets">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Customers</span>
+            <span>All tweets</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/panelVehicle">
+        <a class="nav-link" href="/tweet/addTweet">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Vehicles</span>
+            <span>Create tweet</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/panelOrder">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Orders</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/panelEmployeeStatus">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Employee status</span>
-        </a>
-    </li>
+
+
 
 
 <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
-            <span>Statistics</span>
+            <span>Messages</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <h6 class="dropdown-header">Reports</h6>
-            <a class="dropdown-item" href="/report1">Report 1</a>
-            <a class="dropdown-item" href="/report2">Report 2</a>
+            <h6 class="dropdown-header">Message panel:</h6>
+            <a class="dropdown-item" href="/send">Send new</a>
+            <a class="dropdown-item" href="/messages">Received</a>
+            <a class="dropdown-item" href="/history">History</a>
 
 
             <%--<h6 class="dropdown-header">Login Screens:</h6>--%>
